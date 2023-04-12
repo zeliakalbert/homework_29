@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.JavascriptExecutor;
 import java.util.*;
 public class tester_2 {
@@ -31,11 +32,21 @@ public class tester_2 {
         driver.findElement(By.id("password")).sendKeys("secret_sauce");
         driver.findElement(By.id("login-button")).click();
         driver.findElement(By.cssSelector(".shopping_cart_link")).click();
+        {
+            List<WebElement> elements = driver.findElements(By.cssSelector(".cart_item"));
+            assert(elements.size() == 0);
+        }
         driver.findElement(By.id("continue-shopping")).click();
         driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
-        driver.findElement(By.linkText("1")).click();
-        driver.findElement(By.id("remove-sauce-labs-backpack")).click();
-        driver.findElement(By.id("continue-shopping")).click();
         driver.findElement(By.cssSelector(".shopping_cart_link")).click();
+        {
+            List<WebElement> elements = driver.findElements(By.cssSelector(".cart_item"));
+            assert(elements.size() > 0);
+        }
+        driver.findElement(By.id("remove-sauce-labs-backpack")).click();
+        {
+            List<WebElement> elements = driver.findElements(By.cssSelector(".cart_item"));
+            assert(elements.size() == 0);
+        }
     }
 }
